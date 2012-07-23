@@ -201,8 +201,7 @@ class ConsoleGui(cmdloop.CommandLoop):
     def __init__(self,sweet_file=SWEET_FILE):
         self.xbmc = XBMC()
         self.difm = DiFm()
-        self.sweet = file(sweet_file,'w+')
-        self.sweet_csv = csv.writer(self.sweet)
+        self.sweet_file = sweet_file
 
     def _onLoopStart(self):
         """
@@ -302,13 +301,15 @@ class ConsoleGui(cmdloop.CommandLoop):
     @cmdloop.shorthelp('Log the currently playing track')
     def sweetCmd(self,flags,args):
         np = self.xbmc.get_now_playing()
-        self.sweet_csv.writerow([
-            datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S'),
-            np.get('Artist'),
-            np.get('Title'),
-            np.get('Album')
-        ])
-        self.sweet.flush()
+
+        with file(self.sweet_file, 'a') as _sweet_file:
+            writer = csv.writer(_sweet_file)
+            writer.writerow([
+                datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S'),
+                np.get('Artist'),
+                np.get('Title'),
+                np.get('Album')
+            ])
 
     def _unknownCommand(self, cmdname, flags, args):
         try:
