@@ -1,8 +1,9 @@
 #!/usr/bin/env python
+# encoding: utf-8
 """
 xbmcstreams - wrapper and CLI for XBMC FTP and HTTP control interfaces
 
-- can save <3'ed stream and track titles to a 'sweet_file'
+- can save <3'ed stream and track titles to a CSV file
 
 """
 
@@ -338,7 +339,7 @@ class ConsoleGui(cmdloop.CommandLoop):
         raise cmdloop.HaltLoop
 
 
-if __name__=="__main__":
+def main():
     from optparse import OptionParser
 
     op = OptionParser()
@@ -362,3 +363,7 @@ if __name__=="__main__":
         console.pushCommandLine('quit')
         console.pushCommandLine(cmd)
         console.runLoop(preamble=False,help=False)
+
+
+if __name__=="__main__":
+    main()
