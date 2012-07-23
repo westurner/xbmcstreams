@@ -305,7 +305,7 @@ class ConsoleGui(cmdloop.CommandLoop):
         with file(self.sweet_file, 'a') as _sweet_file:
             writer = csv.writer(_sweet_file)
             writer.writerow([
-                datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S'),
+                datetime.datetime.now().isoformat(),
                 np.get('Artist'),
                 np.get('Title'),
                 np.get('Album')
